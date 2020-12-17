@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import axios from "axios"
+
+import React from "react";
+
+
+
+class App extends React.Component {
+  state = {
+    categories: []
+  }
+
+  componentDidMount() {
+    axios.get(`https://api.chucknorris.io/jokes/categories`)
+      .then(res => {
+        const categories = res.data;
+        console.log(categories)
+        this.setState({ categories});
+      })
+  }
+
+  render() {
+    return (
+      <ul>
+        { this.state.categories.map((e,i) => <li key={i}>{e}</li>)}
+      </ul>
+    )
+  }
 }
-
 export default App;
